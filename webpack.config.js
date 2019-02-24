@@ -2,7 +2,7 @@ const path = require('path');
 require('babel-polyfill');
 
 const config = {
-  entry: ['babel-polyfill','./src/Layout.js'],
+  entry: ['babel-polyfill','./src/index.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].js',
