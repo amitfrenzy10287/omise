@@ -1,0 +1,93 @@
+From 97d46a5ba663cd2687562c3973b6514f1484b1c9 Mon Sep 17 00:00:00 2001
+From: Amit Upadhyay <amitupadhyay10287@gmail.com>
+Date: Sat, 23 Feb 2019 15:56:09 +0700
+Subject: [PATCH 4/9] Added patch file created by git for latest commits
+
+---
+ .idea/workspace.xml                           | 26 +++----------------
+ ...Change-OmiseGO-Elixir-Challenge-link.patch | 25 ++++++++++++++++++
+ 2 files changed, 28 insertions(+), 23 deletions(-)
+ create mode 100644 patches/0001-Change-OmiseGO-Elixir-Challenge-link.patch
+
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+index 1101347..f1efd72 100644
+--- a/.idea/workspace.xml
++++ b/.idea/workspace.xml
+@@ -1,27 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="29784be5-ce8c-4d34-bf26-b613802cb117" name="Default Changelist" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/AppOld.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Layout/index.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Layout/style.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Loader/index.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/components/Loader/style.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/containers/Home/index.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/containers/Home/style.js" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/store/reducers/donationReducer.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.babelrc" beforeDir="false" afterPath="$PROJECT_DIR$/.babelrc" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/store/actions/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actionTypes.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/store/actions/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/store/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/index.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+-    </list>
++    <list default="true" id="29784be5-ce8c-4d34-bf26-b613802cb117" name="Default Changelist" comment="" />
+     <ignored path="$PROJECT_DIR$/.tmp/" />
+     <ignored path="$PROJECT_DIR$/temp/" />
+     <ignored path="$PROJECT_DIR$/tmp/" />
+@@ -298,12 +278,12 @@
+       <option name="presentableId" value="Default" />
+       <updated>1550741334060</updated>
+       <workItem from="1550741335950" duration="13673000" />
+-      <workItem from="1550828020611" duration="29553000" />
++      <workItem from="1550828020611" duration="29804000" />
+     </task>
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">
+-    <option name="totallyTimeSpent" value="43226000" />
++    <option name="totallyTimeSpent" value="43477000" />
+   </component>
+   <component name="ToolWindowManager">
+     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+diff --git a/patches/0001-Change-OmiseGO-Elixir-Challenge-link.patch b/patches/0001-Change-OmiseGO-Elixir-Challenge-link.patch
+new file mode 100644
+index 0000000..eafa9bc
+--- /dev/null
++++ b/patches/0001-Change-OmiseGO-Elixir-Challenge-link.patch
+@@ -0,0 +1,25 @@
++From 1f6749fb10aa61692253d6ace2067913fd16a382 Mon Sep 17 00:00:00 2001
++From: Francesco Diomaitua <francesco@Francescos-MacBook-Pro-2.local>
++Date: Thu, 21 Feb 2019 11:55:57 +0700
++Subject: [PATCH] Change OmiseGO Elixir Challenge link
++
++---
++ README.md | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/README.md b/README.md
++index 7504c62..13babcd 100644
++--- a/README.md
+++++ b/README.md
++@@ -35,7 +35,7 @@ Pick the one that most suites the position you wish to apply.
++ 
++ **OmiseGO**
++ 
++-* Backend / Elixir - [omg-elixir-challenge](https://gist.github.com/T-Dnzt/2b6e8d74167e07783a689ba4fe8ef9ff)
+++* Backend / Elixir - [omg-elixir-challenge](https://gist.github.com/T-Dnzt/73813aa982d060d87e64e52cd9543799)
++ * Frontend / React - [omg-react-challenge](https://gist.github.com/T-Dnzt/71b2fa89ca47c465119bd3d9ed94db29)
++ * Backend / Go - [go-challenge](https://github.com/omise/challenges/tree/challenge-go)
++ * Devops / Kubernetes [challenge-devops](https://github.com/omise/challenges/tree/challenge-devops)
++-- 
++2.19.0.windows.1
++
+-- 
+2.19.0.windows.1
+

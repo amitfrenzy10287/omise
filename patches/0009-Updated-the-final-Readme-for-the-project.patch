@@ -1,0 +1,400 @@
+From 95fa1a19d7a003acd1b49658c3693ad1df1ddbff Mon Sep 17 00:00:00 2001
+From: Amit Upadhyay <amitupadhyay10287@gmail.com>
+Date: Sun, 24 Feb 2019 11:04:33 +0700
+Subject: [PATCH 9/9] Updated the final Readme for the project
+
+---
+ .idea/workspace.xml | 132 +++++++++++++++++++++++---------------------
+ README.md           |  44 +++------------
+ db.json             |   6 ++
+ 3 files changed, 83 insertions(+), 99 deletions(-)
+
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+index 15eabfb..42e21a3 100644
+--- a/.idea/workspace.xml
++++ b/.idea/workspace.xml
+@@ -2,20 +2,13 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="29784be5-ce8c-4d34-bf26-b613802cb117" name="Default Changelist" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/components/Layout/Layout.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/components/Layout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DonationCard/index.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/components/Layout/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/style.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/components/Loader/index.js" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/components/Loader/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DonationCard/style.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/containers/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Home/index.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/containers/Home/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Home/style.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/store/actions/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actionTypes.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/store/actions/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.js" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/patches/0001-Added-initial-files-as-a-starter-project-to-continue.patch" beforeDir="false" afterPath="$PROJECT_DIR$/patches/0001-Added-initial-files-as-a-starter-project-to-continue.patch" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/patches/0002-Added-router-in-main-index-file.patch" beforeDir="false" afterPath="$PROJECT_DIR$/patches/0002-Added-router-in-main-index-file.patch" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/patches/0003-Added-design-Layout-payment-layout-and-payment-funct.patch" beforeDir="false" afterPath="$PROJECT_DIR$/patches/0003-Added-design-Layout-payment-layout-and-payment-funct.patch" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/patches/0004-Added-patch-file-created-by-git-for-latest-commits.patch" beforeDir="false" afterPath="$PROJECT_DIR$/patches/0004-Added-patch-file-created-by-git-for-latest-commits.patch" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/patches/0005-Fixed-mobile-layout-for-payment.patch" beforeDir="false" afterPath="$PROJECT_DIR$/patches/0005-Fixed-mobile-layout-for-payment.patch" afterDir="false" />
+     </list>
+     <ignored path="$PROJECT_DIR$/.tmp/" />
+     <ignored path="$PROJECT_DIR$/temp/" />
+@@ -42,6 +35,7 @@
+           <entry key="jpg" value="1" />
+           <entry key="js" value="26" />
+           <entry key="json" value="4" />
++          <entry key="md" value="1" />
+         </counts>
+       </usages-collector>
+       <usages-collector id="statistics.file.types.open">
+@@ -49,6 +43,7 @@
+           <entry key="Image" value="1" />
+           <entry key="JSON" value="6" />
+           <entry key="JavaScript" value="26" />
++          <entry key="Markdown" value="1" />
+         </counts>
+       </usages-collector>
+       <usages-collector id="statistics.js.language.service.starts">
+@@ -61,12 +56,14 @@
+           <entry key="babelrc" value="11" />
+           <entry key="js" value="7451" />
+           <entry key="json" value="42" />
++          <entry key="md" value="373" />
+         </counts>
+       </usages-collector>
+       <usages-collector id="statistics.file.types.edit">
+         <counts>
+           <entry key="JSON" value="53" />
+           <entry key="JavaScript" value="7451" />
++          <entry key="Markdown" value="373" />
+         </counts>
+       </usages-collector>
+     </session>
+@@ -76,8 +73,8 @@
+       <file pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/index.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="414">
+-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
++            <state relative-caret-position="126">
++              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+               <folding>
+                 <element signature="e#0#26#0" expanded="true" />
+               </folding>
+@@ -85,11 +82,23 @@
+           </provider>
+         </entry>
+       </file>
++      <file pinned="false" current-in-tab="true">
++        <entry file="file://$PROJECT_DIR$/README.md">
++          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
++            <state split_layout="SPLIT">
++              <first_editor relative-caret-position="216">
++                <caret line="12" column="45" selection-start-line="12" selection-start-column="45" selection-end-line="12" selection-end-column="45" />
++              </first_editor>
++              <second_editor />
++            </state>
++          </provider>
++        </entry>
++      </file>
+       <file pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/App.js">
+           <provider selected="true" editor-type-id="text-editor">
+             <state relative-caret-position="306">
+-              <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
++              <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+               <folding>
+                 <element signature="e#0#41#0" expanded="true" />
+               </folding>
+@@ -101,7 +110,7 @@
+         <entry file="file://$PROJECT_DIR$/src/components/Layout/Layout.js">
+           <provider selected="true" editor-type-id="text-editor">
+             <state relative-caret-position="414">
+-              <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
++              <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+               <folding>
+                 <element signature="e#0#26#0" expanded="true" />
+               </folding>
+@@ -130,15 +139,6 @@
+           </provider>
+         </entry>
+       </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/containers/Home/index.js">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="18">
+-              <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+       <file pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/store/actions/actions.js">
+           <provider selected="true" editor-type-id="text-editor">
+@@ -151,29 +151,29 @@
+           </provider>
+         </entry>
+       </file>
+-      <file pinned="false" current-in-tab="true">
++      <file pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/store/actions/actionTypes.js">
+           <provider selected="true" editor-type-id="text-editor">
+             <state relative-caret-position="72">
+-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
++              <caret line="4" selection-start-line="4" selection-end-line="4" />
+             </state>
+           </provider>
+         </entry>
+       </file>
+       <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/components/DonationCard/style.js">
++        <entry file="file://$PROJECT_DIR$/src/store/reducers/donationReducer.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state>
+-              <caret selection-end-column="68" />
++            <state relative-caret-position="-207">
++              <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
+             </state>
+           </provider>
+         </entry>
+       </file>
+       <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/containers/Home/style.js">
++        <entry file="file://$PROJECT_DIR$/src/components/DonationCard/style.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="18">
+-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
++            <state>
++              <caret selection-end-column="68" />
+             </state>
+           </provider>
+         </entry>
+@@ -226,6 +226,7 @@
+         <option value="$PROJECT_DIR$/src/helpers.js" />
+         <option value="$PROJECT_DIR$/src/store/actions/actions.js" />
+         <option value="$PROJECT_DIR$/src/store/actions/actionTypes.js" />
++        <option value="$PROJECT_DIR$/README.md" />
+       </list>
+     </option>
+   </component>
+@@ -264,6 +265,11 @@
+               <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
+               <item name="challenges" type="462c0819:PsiDirectoryNode" />
+             </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="patches" type="462c0819:PsiDirectoryNode" />
++            </path>
+             <path>
+               <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
+               <item name="challenges" type="462c0819:PsiDirectoryNode" />
+@@ -325,6 +331,13 @@
+               <item name="store" type="462c0819:PsiDirectoryNode" />
+               <item name="actions" type="462c0819:PsiDirectoryNode" />
+             </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="store" type="462c0819:PsiDirectoryNode" />
++              <item name="reducers" type="462c0819:PsiDirectoryNode" />
++            </path>
+           </expand>
+           <select />
+         </subPane>
+@@ -369,13 +382,13 @@
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">
+-    <option name="totallyTimeSpent" value="59643000" />
++    <option name="totallyTimeSpent" value="60486000" />
+   </component>
+   <component name="ToolWindowManager">
+     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+     <editor active="true" />
+     <layout>
+-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16523464" />
++      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3602115" />
+       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+       <window_info id="npm" order="2" side_tool="true" />
+       <window_info id="Favorites" order="3" side_tool="true" />
+@@ -405,13 +418,7 @@
+     <entry file="file://$PROJECT_DIR$/resources/tamboon-react-screenshot.jpg">
+       <provider selected="true" editor-type-id="images" />
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/AppOld.js">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1512">
+-          <caret line="89" column="19" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="19" />
+-        </state>
+-      </provider>
+-    </entry>
++    <entry file="file://$PROJECT_DIR$/src/AppOld.js" />
+     <entry file="file://$PROJECT_DIR$/src/store/actions/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="54">
+@@ -421,8 +428,8 @@
+     </entry>
+     <entry file="file://$PROJECT_DIR$/src/store/reducers/donationReducer.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="72">
+-          <caret line="19" column="80" selection-start-line="19" selection-start-column="80" selection-end-line="19" selection-end-column="80" />
++        <state relative-caret-position="-207">
++          <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
+         </state>
+       </provider>
+     </entry>
+@@ -440,9 +447,7 @@
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/components/Loader/style.js">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
++    <entry file="file://$PROJECT_DIR$/src/components/Loader/style.js" />
+     <entry file="file://$PROJECT_DIR$/db.json">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="-1881">
+@@ -457,16 +462,7 @@
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="774">
+-          <caret line="43" column="3" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
+-          <folding>
+-            <element signature="e#0#26#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
++    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js" />
+     <entry file="file://$PROJECT_DIR$/src/components/DonationCard/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="72">
+@@ -508,7 +504,7 @@
+     <entry file="file://$PROJECT_DIR$/src/components/Layout/Layout.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="414">
+-          <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
++          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+           <folding>
+             <element signature="e#0#26#0" expanded="true" />
+           </folding>
+@@ -518,7 +514,7 @@
+     <entry file="file://$PROJECT_DIR$/src/App.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="306">
+-          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
++          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+           <folding>
+             <element signature="e#0#41#0" expanded="true" />
+           </folding>
+@@ -527,8 +523,8 @@
+     </entry>
+     <entry file="file://$PROJECT_DIR$/src/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="414">
+-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
++        <state relative-caret-position="126">
++          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+           <folding>
+             <element signature="e#0#26#0" expanded="true" />
+           </folding>
+@@ -555,7 +551,17 @@
+     <entry file="file://$PROJECT_DIR$/src/store/actions/actionTypes.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="72">
+-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
++          <caret line="4" selection-start-line="4" selection-end-line="4" />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/README.md">
++      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
++        <state split_layout="SPLIT">
++          <first_editor relative-caret-position="216">
++            <caret line="12" column="45" selection-start-line="12" selection-start-column="45" selection-end-line="12" selection-end-column="45" />
++          </first_editor>
++          <second_editor />
+         </state>
+       </provider>
+     </entry>
+diff --git a/README.md b/README.md
+index 13babcd..2d7ee91 100644
+--- a/README.md
++++ b/README.md
+@@ -1,41 +1,13 @@
+ # Omise Code Challenges
+ 
+-This repository houses Omise's interviewing code challenges. These are small hands-on
+-projects that are very relevant to the tasks you will be working on at Omise.
++This repository contains small donation platform where user can donate the suitable amount of their choice.
+ 
+-### Ground Rules
++### How it works
+ 
+-* We prefer well-thought-out solutions over the quick-and-dirty kind. So take your time,
+-  if you need it. A rushed job is usually matched by a swift rejection.
+-* Average completion time so far has been around one to two weeks.
+-* Submission is done via a [git format-patch](https://git-scm.com/docs/git-format-patch).
+-  Send your patch to the hiring team.
++* npm install
++* npm run server - For server to serve api to fetch all donations
++* npm run client - It serves the browser to view platform where user can start with donations
+ 
+-### Challenges
+-
+-Pick the one that most suites the position you wish to apply.
+-
+-**Omise**
+-
+-* Backend / Ruby on Rails - [tamboon-rails](https://github.com/omise/challenges/tree/challenge-rails)
+-* Backend / Go - [go-challenge](https://github.com/omise/challenges/tree/challenge-go)
+-* Devops / Kubernetes [challenge-devops](https://github.com/omise/challenges/tree/challenge-devops)
+-* Frontend / React - [tamboon-react](https://github.com/omise/challenges/tree/challenge-react)
+-* Mobile App / iOS and Android - [tamboon-mobile](https://github.com/omise/challenges/tree/challenge-mobile)
+-* Design / UX - [design-challenge](https://github.com/omise/challenges/blob/challenge-design/design-challenge.pdf)
+-* Devops / K8s - [devops-challenge](https://github.com/omise/challenges/tree/challenge-devops)
+-* Data Engineer [code-challenge](https://github.com/omise/challenges/tree/challenge-data-engineer)
+-
+-**GO.Exchange**
+-
+-* Backend / Elixir [exchange-challenge](https://gist.github.com/theesit-omise/26abab54487996d9702535421b459858)
+-* Frontend / React - [tamboon-react](https://github.com/theesit-omise/challenges/tree/challenge-react)
+-* Backend / Go - [go-challenge](https://github.com/omise/challenges/tree/challenge-go)
+-* Devops / Kubernetes [challenge-devops](https://github.com/omise/challenges/tree/challenge-devops)
+-
+-**OmiseGO**
+-
+-* Backend / Elixir - [omg-elixir-challenge](https://gist.github.com/T-Dnzt/73813aa982d060d87e64e52cd9543799)
+-* Frontend / React - [omg-react-challenge](https://gist.github.com/T-Dnzt/71b2fa89ca47c465119bd3d9ed94db29)
+-* Backend / Go - [go-challenge](https://github.com/omise/challenges/tree/challenge-go)
+-* Devops / Kubernetes [challenge-devops](https://github.com/omise/challenges/tree/challenge-devops)
++### How it serves
++* http://localhost:3000/ - For client service
++* http://localhost:3001/ - For server service
+diff --git a/db.json b/db.json
+index d9f002a..d990850 100644
+--- a/db.json
++++ b/db.json
+@@ -397,6 +397,12 @@
+       "amount": 50,
+       "currency": "THB",
+       "id": 100
++    },
++    {
++      "charitiesId": 1,
++      "amount": 100,
++      "currency": "THB",
++      "id": 101
+     }
+   ]
+ }
+\ No newline at end of file
+-- 
+2.19.0.windows.1
+

@@ -1,0 +1,1887 @@
+From 98467784c8e85af62c392c541fd9e8c77504fa05 Mon Sep 17 00:00:00 2001
+From: Amit Upadhyay <amitupadhyay10287@gmail.com>
+Date: Sun, 24 Feb 2019 10:36:43 +0700
+Subject: [PATCH 7/7] Added navigation bar and layout to wrap the app component
+ inside it.Also changes some file structure and removed unused code
+
+---
+ .idea/workspace.xml                  | 331 +++++++++++++++++++------
+ db.json                              |  48 ++++
+ src/App.js                           | 352 +--------------------------
+ src/AppOld.js                        | 114 ---------
+ src/components/DonationCard/index.js |  63 +++++
+ src/components/DonationCard/style.js | 170 +++++++++++++
+ src/components/Layout/Layout.js      |  30 +++
+ src/components/Layout/index.js       |   0
+ src/components/Layout/style.js       |  60 +++++
+ src/components/Loader/index.js       | 101 --------
+ src/components/Loader/style.js       |   0
+ src/containers/Home/index.js         | 112 +++++++++
+ src/containers/Home/style.js         |  94 +++++++
+ src/index.js                         |  20 +-
+ src/store/actions/actionTypes.js     |   2 -
+ src/store/actions/actions.js         |  10 +-
+ webpack.config.js                    |   2 +-
+ 17 files changed, 848 insertions(+), 661 deletions(-)
+ delete mode 100644 src/AppOld.js
+ create mode 100644 src/components/DonationCard/index.js
+ create mode 100644 src/components/DonationCard/style.js
+ create mode 100644 src/components/Layout/Layout.js
+ delete mode 100644 src/components/Layout/index.js
+ delete mode 100644 src/components/Loader/index.js
+ delete mode 100644 src/components/Loader/style.js
+
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+index 7fa103a..15eabfb 100644
+--- a/.idea/workspace.xml
++++ b/.idea/workspace.xml
+@@ -2,9 +2,20 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="29784be5-ce8c-4d34-bf26-b613802cb117" name="Default Changelist" comment="">
++      <change afterPath="$PROJECT_DIR$/src/components/Layout/Layout.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db.json" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/components/Layout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DonationCard/index.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/components/Layout/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/style.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/components/Loader/index.js" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/components/Loader/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DonationCard/style.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/containers/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Home/index.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/containers/Home/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Home/style.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/store/actions/actionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actionTypes.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/store/actions/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+     </list>
+     <ignored path="$PROJECT_DIR$/.tmp/" />
+     <ignored path="$PROJECT_DIR$/temp/" />
+@@ -29,15 +40,15 @@
+         <counts>
+           <entry key="babelrc" value="2" />
+           <entry key="jpg" value="1" />
+-          <entry key="js" value="15" />
+-          <entry key="json" value="3" />
++          <entry key="js" value="26" />
++          <entry key="json" value="4" />
+         </counts>
+       </usages-collector>
+       <usages-collector id="statistics.file.types.open">
+         <counts>
+           <entry key="Image" value="1" />
+-          <entry key="JSON" value="5" />
+-          <entry key="JavaScript" value="15" />
++          <entry key="JSON" value="6" />
++          <entry key="JavaScript" value="26" />
+         </counts>
+       </usages-collector>
+       <usages-collector id="statistics.js.language.service.starts">
+@@ -48,25 +59,37 @@
+       <usages-collector id="statistics.file.extensions.edit">
+         <counts>
+           <entry key="babelrc" value="11" />
+-          <entry key="js" value="5937" />
++          <entry key="js" value="7451" />
+           <entry key="json" value="42" />
+         </counts>
+       </usages-collector>
+       <usages-collector id="statistics.file.types.edit">
+         <counts>
+           <entry key="JSON" value="53" />
+-          <entry key="JavaScript" value="5937" />
++          <entry key="JavaScript" value="7451" />
+         </counts>
+       </usages-collector>
+     </session>
+   </component>
+   <component name="FileEditorManager">
+     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+-      <file pinned="false" current-in-tab="true">
++      <file pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/index.js">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="414">
++              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
++              <folding>
++                <element signature="e#0#26#0" expanded="true" />
++              </folding>
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file pinned="false" current-in-tab="false">
+         <entry file="file://$PROJECT_DIR$/src/App.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="256">
+-              <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
++            <state relative-caret-position="306">
++              <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+               <folding>
+                 <element signature="e#0#41#0" expanded="true" />
+               </folding>
+@@ -75,28 +98,82 @@
+         </entry>
+       </file>
+       <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/webpack.config.js">
++        <entry file="file://$PROJECT_DIR$/src/components/Layout/Layout.js">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="414">
++              <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
++              <folding>
++                <element signature="e#0#26#0" expanded="true" />
++              </folding>
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/helpers.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="396">
+-              <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
++            <state relative-caret-position="54">
++              <caret line="3" selection-start-line="3" selection-end-line="3" />
+             </state>
+           </provider>
+         </entry>
+       </file>
+       <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/.babelrc">
++        <entry file="file://$PROJECT_DIR$/src/components/Layout/style.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="162">
+-              <caret line="13" selection-start-line="13" selection-end-line="13" />
++            <state relative-caret-position="792">
++              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
++              <folding>
++                <element signature="e#0#39#0" expanded="true" />
++              </folding>
+             </state>
+           </provider>
+         </entry>
+       </file>
+       <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/package.json">
++        <entry file="file://$PROJECT_DIR$/src/containers/Home/index.js">
+           <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="504">
+-              <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
++            <state relative-caret-position="18">
++              <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/store/actions/actions.js">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="36">
++              <caret line="2" column="47" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="47" />
++              <folding>
++                <element signature="e#0#45#0" expanded="true" />
++              </folding>
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file pinned="false" current-in-tab="true">
++        <entry file="file://$PROJECT_DIR$/src/store/actions/actionTypes.js">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="72">
++              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/components/DonationCard/style.js">
++          <provider selected="true" editor-type-id="text-editor">
++            <state>
++              <caret selection-end-column="68" />
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/containers/Home/style.js">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="18">
++              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+             </state>
+           </provider>
+         </entry>
+@@ -110,6 +187,17 @@
+       <find>radio</find>
+       <find>PaymentB</find>
+       <find>Button</find>
++      <find>CardBodyImage</find>
++      <find>PaymentBodyWrapper</find>
++      <find>BtnPaymentWrapper</find>
++      <find>CloseButton</find>
++      <find>GlobalStyle</find>
++      <find>SelectAmount</find>
++      <find>Radio</find>
++      <find>FooterButtonWrapper</find>
++      <find>Container</find>
++      <find>Btn</find>
++      <find>InputLabel</find>
+     </findStrings>
+   </component>
+   <component name="Git.Settings">
+@@ -118,19 +206,26 @@
+   <component name="IdeDocumentHistory">
+     <option name="CHANGED_PATHS">
+       <list>
+-        <option value="$PROJECT_DIR$/src/helpers.js" />
+-        <option value="$PROJECT_DIR$/src/store/actions/actionTypes.js" />
+         <option value="$PROJECT_DIR$/src/AppOld.js" />
+         <option value="$PROJECT_DIR$/src/store/actions/index.js" />
+-        <option value="$PROJECT_DIR$/src/index.js" />
+         <option value="$PROJECT_DIR$/db.json" />
+-        <option value="$PROJECT_DIR$/src/store/actions/actions.js" />
+         <option value="$PROJECT_DIR$/src/store/reducers/donationReducer.js" />
+         <option value="$PROJECT_DIR$/package.json" />
+         <option value="$PROJECT_DIR$/.babelrc" />
+-        <option value="$PROJECT_DIR$/src/components/Loader/index.js" />
+         <option value="$PROJECT_DIR$/webpack.config.js" />
++        <option value="$PROJECT_DIR$/src/components/Loader/index.js" />
++        <option value="$PROJECT_DIR$/src/components/DonationCard/style.js" />
++        <option value="$PROJECT_DIR$/src/components/DonationCard/index.js" />
++        <option value="$PROJECT_DIR$/src/containers/Home/style.js" />
++        <option value="$PROJECT_DIR$/src/containers/Home/index.js" />
+         <option value="$PROJECT_DIR$/src/App.js" />
++        <option value="$PROJECT_DIR$/src/components/Layout/index.js" />
++        <option value="$PROJECT_DIR$/src/components/Layout/Layout.js" />
++        <option value="$PROJECT_DIR$/src/components/Layout/style.js" />
++        <option value="$PROJECT_DIR$/src/index.js" />
++        <option value="$PROJECT_DIR$/src/helpers.js" />
++        <option value="$PROJECT_DIR$/src/store/actions/actions.js" />
++        <option value="$PROJECT_DIR$/src/store/actions/actionTypes.js" />
+       </list>
+     </option>
+   </component>
+@@ -154,7 +249,7 @@
+     <option name="x" value="-10" />
+     <option name="y" value="-10" />
+     <option name="width" value="1940" />
+-    <option name="height" value="1100" />
++    <option name="height" value="1050" />
+   </component>
+   <component name="ProjectView">
+     <navigator proportions="" version="1">
+@@ -177,18 +272,58 @@
+             <path>
+               <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
+               <item name="challenges" type="462c0819:PsiDirectoryNode" />
+-              <item name="public" type="462c0819:PsiDirectoryNode" />
+-              <item name="images" type="462c0819:PsiDirectoryNode" />
++              <item name="resources" type="462c0819:PsiDirectoryNode" />
+             </path>
+             <path>
+               <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
+               <item name="challenges" type="462c0819:PsiDirectoryNode" />
+-              <item name="resources" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++            </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="components" type="462c0819:PsiDirectoryNode" />
++            </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="components" type="462c0819:PsiDirectoryNode" />
++              <item name="DonationCard" type="462c0819:PsiDirectoryNode" />
+             </path>
+             <path>
+               <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
+               <item name="challenges" type="462c0819:PsiDirectoryNode" />
+               <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="components" type="462c0819:PsiDirectoryNode" />
++              <item name="Layout" type="462c0819:PsiDirectoryNode" />
++            </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="containers" type="462c0819:PsiDirectoryNode" />
++            </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="containers" type="462c0819:PsiDirectoryNode" />
++              <item name="Home" type="462c0819:PsiDirectoryNode" />
++            </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="store" type="462c0819:PsiDirectoryNode" />
++            </path>
++            <path>
++              <item name="challenges" type="b2602c69:ProjectViewProjectNode" />
++              <item name="challenges" type="462c0819:PsiDirectoryNode" />
++              <item name="src" type="462c0819:PsiDirectoryNode" />
++              <item name="store" type="462c0819:PsiDirectoryNode" />
++              <item name="actions" type="462c0819:PsiDirectoryNode" />
+             </path>
+           </expand>
+           <select />
+@@ -198,7 +333,7 @@
+   </component>
+   <component name="PropertiesComponent">
+     <property name="WebServerToolWindowFactoryState" value="false" />
+-    <property name="last_opened_file_path" value="C:/travelbook/travelbook-hotel" />
++    <property name="last_opened_file_path" value="C:/item-listing" />
+     <property name="node.js.detected.package.eslint" value="true" />
+     <property name="node.js.path.for.package.eslint" value="project" />
+     <property name="node.js.selected.package.eslint" value="C:\omise-challenge\challenges\node_modules\eslint" />
+@@ -234,7 +369,7 @@
+     <servers />
+   </component>
+   <component name="TimeTrackingManager">
+-    <option name="totallyTimeSpent" value="51629000" />
++    <option name="totallyTimeSpent" value="59643000" />
+   </component>
+   <component name="ToolWindowManager">
+     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+@@ -245,7 +380,7 @@
+       <window_info id="npm" order="2" side_tool="true" />
+       <window_info id="Favorites" order="3" side_tool="true" />
+       <window_info anchor="bottom" id="Message" order="0" />
+-      <window_info anchor="bottom" id="Find" order="1" />
++      <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
+       <window_info anchor="bottom" id="Run" order="2" />
+       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+@@ -270,117 +405,159 @@
+     <entry file="file://$PROJECT_DIR$/resources/tamboon-react-screenshot.jpg">
+       <provider selected="true" editor-type-id="images" />
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/store/actions/actionTypes.js">
++    <entry file="file://$PROJECT_DIR$/src/AppOld.js">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="1512">
++          <caret line="89" column="19" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="19" />
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/store/actions/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="54">
+-          <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="33" />
++          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/AppOld.js">
++    <entry file="file://$PROJECT_DIR$/src/store/reducers/donationReducer.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1512">
+-          <caret line="89" column="19" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="19" />
++        <state relative-caret-position="72">
++          <caret line="19" column="80" selection-start-line="19" selection-start-column="80" selection-end-line="19" selection-end-column="80" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/helpers.js">
++    <entry file="file://$PROJECT_DIR$/package.json">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="54">
+-          <caret line="3" selection-start-line="3" selection-end-line="3" />
++        <state relative-caret-position="504">
++          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/store/actions/index.js">
++    <entry file="file://$PROJECT_DIR$/.babelrc">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="54">
+-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
++        <state relative-caret-position="162">
++          <caret line="13" selection-start-line="13" selection-end-line="13" />
+         </state>
+       </provider>
+     </entry>
++    <entry file="file://$PROJECT_DIR$/src/components/Loader/style.js">
++      <provider selected="true" editor-type-id="text-editor" />
++    </entry>
+     <entry file="file://$PROJECT_DIR$/db.json">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="589">
++        <state relative-caret-position="-1881">
+           <caret line="75" column="5" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/index.js">
++    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="36">
+-          <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
++        <state relative-caret-position="378">
++          <caret line="27" column="49" lean-forward="true" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/store/actions/actions.js">
++    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-509">
+-          <caret line="4" column="32" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="32" />
++        <state relative-caret-position="774">
++          <caret line="43" column="3" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
+           <folding>
+-            <element signature="e#0#45#0" expanded="true" />
++            <element signature="e#0#26#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/store/reducers/donationReducer.js">
++    <entry file="file://$PROJECT_DIR$/src/components/DonationCard/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="72">
+-          <caret line="19" column="80" selection-start-line="19" selection-start-column="80" selection-end-line="19" selection-end-column="80" />
++          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/package.json">
++    <entry file="file://$PROJECT_DIR$/src/containers/Home/style.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="504">
+-          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
++        <state relative-caret-position="18">
++          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/.babelrc">
++    <entry file="file://$PROJECT_DIR$/src/containers/Home/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="162">
+-          <caret line="13" selection-start-line="13" selection-end-line="13" />
++        <state relative-caret-position="18">
++          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/components/Loader/style.js">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/components/Layout/index.js">
+-      <provider selected="true" editor-type-id="text-editor" />
++    <entry file="file://$PROJECT_DIR$/src/components/DonationCard/style.js">
++      <provider selected="true" editor-type-id="text-editor">
++        <state>
++          <caret selection-end-column="68" />
++        </state>
++      </provider>
+     </entry>
+     <entry file="file://$PROJECT_DIR$/src/components/Layout/style.js">
+-      <provider selected="true" editor-type-id="text-editor" />
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="792">
++          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
++          <folding>
++            <element signature="e#0#39#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/containers/Home/style.js">
+-      <provider selected="true" editor-type-id="text-editor" />
++    <entry file="file://$PROJECT_DIR$/src/components/Layout/Layout.js">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="414">
++          <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
++          <folding>
++            <element signature="e#0#26#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
++    <entry file="file://$PROJECT_DIR$/src/App.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="396">
+-          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
++        <state relative-caret-position="306">
++          <caret line="17" column="3" lean-forward="true" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
++          <folding>
++            <element signature="e#0#41#0" expanded="true" />
++          </folding>
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
++    <entry file="file://$PROJECT_DIR$/src/index.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-54">
+-          <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
++        <state relative-caret-position="414">
++          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
++          <folding>
++            <element signature="e#0#26#0" expanded="true" />
++          </folding>
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/containers/Home/index.js">
+-      <provider selected="true" editor-type-id="text-editor" />
++    <entry file="file://$PROJECT_DIR$/src/helpers.js">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="54">
++          <caret line="3" selection-start-line="3" selection-end-line="3" />
++        </state>
++      </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/App.js">
++    <entry file="file://$PROJECT_DIR$/src/store/actions/actions.js">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="256">
+-          <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
++        <state relative-caret-position="36">
++          <caret line="2" column="47" selection-start-line="2" selection-start-column="47" selection-end-line="2" selection-end-column="47" />
+           <folding>
+-            <element signature="e#0#41#0" expanded="true" />
++            <element signature="e#0#45#0" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+     </entry>
++    <entry file="file://$PROJECT_DIR$/src/store/actions/actionTypes.js">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="72">
++          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
++        </state>
++      </provider>
++    </entry>
+   </component>
+ </project>
+\ No newline at end of file
+diff --git a/db.json b/db.json
+index daa89a1..d9f002a 100644
+--- a/db.json
++++ b/db.json
+@@ -349,6 +349,54 @@
+       "amount": 500,
+       "currency": "THB",
+       "id": 92
++    },
++    {
++      "charitiesId": 1,
++      "amount": 50,
++      "currency": "THB",
++      "id": 93
++    },
++    {
++      "charitiesId": 2,
++      "amount": 100,
++      "currency": "THB",
++      "id": 94
++    },
++    {
++      "charitiesId": 1,
++      "amount": 50,
++      "currency": "THB",
++      "id": 95
++    },
++    {
++      "charitiesId": 1,
++      "amount": 500,
++      "currency": "THB",
++      "id": 96
++    },
++    {
++      "charitiesId": 2,
++      "amount": 50,
++      "currency": "THB",
++      "id": 97
++    },
++    {
++      "charitiesId": 1,
++      "amount": 500,
++      "currency": "THB",
++      "id": 98
++    },
++    {
++      "charitiesId": 1,
++      "amount": 100,
++      "currency": "THB",
++      "id": 99
++    },
++    {
++      "charitiesId": 2,
++      "amount": 50,
++      "currency": "THB",
++      "id": 100
+     }
+   ]
+ }
+\ No newline at end of file
+diff --git a/src/App.js b/src/App.js
+index 1a4ac61..bd71608 100644
+--- a/src/App.js
++++ b/src/App.js
+@@ -1,347 +1,21 @@
+ import React, { Component } from 'react';
+-import { connect } from 'react-redux';
+-import styled, { injectGlobal, keyframes } from 'styled-components'
+-
+-import fetch from 'isomorphic-fetch';
+-import * as actions from './store/actions';
+-
+-
+-const Card = styled.div`
+-  position:relative;
+-  display: inline-block;
+-  margin:10px;
+-  min-width: calc(50% - 20px);
+-  border-radius: 4px;
+-  box-shadow: #ccc 1px 2px 8px;
+-  @media(max-width:1000px){
+-    display:block;
+-    width: calc (100% - 10px);
+-  }
+-`;
+-
+-const Button = styled.button`
+-    padding: 0.5em 1em;
+-    border: solid 1px #000bff;
+-    outline: 0;
+-    background: #fff;
+-    color: #000bff;
+-    border-radius: 3px;
+-    cursor: pointer;
+-    @media(max-width: 1000px){
+-      display: block;
+-      width: 100%;
+-      padding: 19px;
+-      font-style: normal;
+-      font-size: 23px;
+-    }
+-`;
+-
+-
+-const Slide = keyframes`
+-  100% { left: 0; }
+-`;
+-
+-const FadeIn = keyframes`
+-  from {
+-      opacity:0;
+-  }
+-  to {
+-      opacity:1;
+-  }
+-`;
+-
+-const Message = styled.div`
+-  display: ${(props)=>props.show && props.show};
+-  color: black;
+-  background-color: #ffebc8;
+-  border-radius: 4px;
+-  padding: 20px;
+-  width: 29%;
+-  margin-left: 34%;
+-  background-position: center;
+-  font-size: 18px;
+-  text-align: center;
+-  animation: ${FadeIn} 2s;
+-  -moz-animation: ${FadeIn} 2s; /* Firefox */
+-  -webkit-animation: ${FadeIn} 2s; /* Safari and Chrome */
+-  -o-animation: ${FadeIn} 2s; /* Opera */
+-`;
+-
+-const PaymentWrapper = styled.div`
+-  display: none;
+-  position: absolute;
+-  top:0;
+-  left:100%;
+-  width: 100%;
+-  height: 100%;
+-  opacity:0.9;
+-  background-color:#fff;
+-  -webkit-animation: ${Slide} 0.5s forwards;
+-  animation: ${Slide} 0.5s forwards;
+-`;
+-
+-const CardFooter = styled.div`
+-  position: relative;
+-  padding: 25px 15px 25px 15px;
+-  cursor: pointer;
+-  @media(max-width: 1000px){
+-    padding: 25px 0px 32px 21px;
+-  }
+-`;
+-const FooterTitle = styled.span`
+-  padding:0;
+-  margin:0;
+-  text-align:left;
+-  font-size: 16px;
+-  color: #7c7c7c;
+-  @media(max-width:1000px){
+-    font-size: 25px;
+-    font-weight: bold;
+-  }
+-`;
+-const Container = styled.div`
+-  position:relative;
+-  width: 90%;
+-  margin-left: 5%;
+-  padding:0;
+-`;
+-
+-const CardBodyImage = styled.div`
+-  background-image: url(${(props) => props.src ? props.src : ''});
+-  background-repeat: no-repeat;
+-  background-size: 100% 100%;
+-  background-position: center;
+-  width: 100%;
+-  height: 315px;
+-  object-fit: contain;
+-  background-color:#000;
+-  border-top-left-radius:4px;
+-  border-top-right-radius:4px;
+-  cursor: pointer;
+-  @media(max-width:1000px){
+-    display:block;
+-    width: 100%;
+-  }
+-`;
+-
+-const PaymentBodyWrapper = styled.div`
+-  padding: 15% 10%;
+-  text-align: center;
+-  cursor: pointer;
+-  opacity: 1;
+-  line-height: 32px;
+-  @media(max-width: 1000px){
+-    font-style:normal;
+-    font-size: 21px;
+-  }
+-`;
+-
+-const BtnPaymentWrapper = styled.div`
+-  margin:20px;
+-  text-align: center;
+-`;
+-
+-const CloseButton = styled.div`
+-  position:absolute;
+-  top: 20px;
+-  right: 20px;
+-  background-image: url(images/close.png);
+-  background-repeat: no-repeat;
+-  background-size: 1em 1em;
+-  background-position: center;
+-  width: 1em;
+-  height: 1em;
+-  object-fit: contain;
+-  cursor:pointer;
+-`;
+-const GlobalStyle = injectGlobal`
+-  html,body,p,label,input {
+-    margin:0;
+-    padding:0;
+-    font-family: sans-serif;
+-    font-size: 18px;
+-    font-style: normal;
+-    @media(max-width: 1000px){
+-      font-size: 36px;
+-    }
+-  }
+-`;
+-
+-const SelectAmount =  styled.p`
+-  font-style: normal;
+-  font-size: 20px;
+-  @media(max-width: 1000px){
+-    font-size: 36px;
+-    margin-bottom: 1em;
+-  }
+-`;
+-
+-const InputLabel = styled.label`
+-  font-style: normal;
+-  font-size: 20px;
+-  @media(max-width: 1000px){
+-    font-size: 1.5em;
+-  }
+-`;
+-
+-const Radio =  styled.input`
+-  text-align: left;
+-  font-size: 1em;
+-  width: 1em;
+-  height: 0.8em;
+-  margin-left: 1em;
+-  cursor: pointer;
+-  @media(max-width: 1000px){
+-    margin-left: 1.5em;
+-  }
+-`;
+-
+-const Title = styled.h1`
+-  text-align: center;
+-  color: #7c7c7c;
+-  font-style: normal;
+-  font-size: 26px;
+-  @media(max-width: 1000px){
+-    letter-spacing: 3.75px;
+-    font-size: 36px;
+-    line-height: 32px;
+-  }
+-`;
+-const Subtitle = styled.p`
+-  text-align: center;
+-  color: #7c7c7c;
+-  font-weight:bold;
+-  font-size:18px;
+-  font-style: normal;
+-  @media(max-width: 1000px){
+-    font-size: 25px;
+-  }
+-`;
+-
+-const FooterButtonWrapper = styled.div`
+-  position: absolute;
+-  right: 20px;
+-  top: 25px;
+-  @media(max-width: 1000px){
+-    display: block;
+-    position: relative;
+-  }
+-`;
+-
+-const commonStyles = {
+-  show:{
+-    display: 'block',
+-  },
+-  hide:{
+-    display: 'none',
+-  },
+-};
+-
+-class App extends Component {
+-  constructor( props ) {
+-    super();
+-    this.state = {
+-      charities: [],
+-      selectedAmount: 10,
+-      showPayment:'',
+-    };
+-  };
+-
+-  async componentDidMount() {
+-    const self = this;
+-    const { updateDonation } = self.props;
+-
+-    await fetch('http://localhost:3001/charities')
+-      .then(function(resp) { return resp.json(); })
+-      .then(function(data) {
+-        self.setState({ charities: data }) });
+-
+-    const data = await fetch('http://localhost:3001/payments')
+-      .then(function(resp) { return resp.json() })
+-      .then(function(data) {
+-        return data;
+-      });
+-    updateDonation(data);
+-  }
+-
+-  transitPayment = (id) => {
+-    console.log('Show payment');
+-    this.setState({showPayment: id});
+-  };
+-
+-  closePayment = () => {
+-    this.setState({showPayment:''});
+-  };
++import Home from './containers/Home';
++import { Route, Switch, withRouter } from 'react-router-dom';
++import Layout from './components/Layout/Layout';
+ 
++class App extends Component{
+   render() {
+-    const self = this;
+-    const cards = this.state.charities.map(function(item, i) {
+-      const payments = [10, 20, 50, 100, 500].map((amount, j) => (
+-        <InputLabel key={j}>
+-          <Radio
+-            type="radio"
+-            name="payment"
+-            onClick={function() {
+-              self.setState({ selectedAmount: amount })
+-            }} /> {amount}
+-        </InputLabel>
+-      ));
+-
+-      return (
+-        <Card key={i}>
+-          <CardBodyImage src={ '/images/'+ item.image} />
+-          <CardFooter>
+-            <FooterTitle>{item.name}</FooterTitle>
+-            <FooterButtonWrapper>
+-              <Button onClick={() => self.transitPayment(item.id)}> Donate </Button>
+-            </FooterButtonWrapper>
+-          </CardFooter>
+-          <PaymentWrapper style={self.state.showPayment === item.id ? commonStyles.show : commonStyles.hide}>
+-            <PaymentBodyWrapper>
+-              <SelectAmount>Select the amount to donate(USD)</SelectAmount>
+-              {payments}
+-              <BtnPaymentWrapper>
+-                <Button
+-                  onClick={() => self.props.handlePayment(item.id, self.state.selectedAmount, item.currency)}
+-                >Pay
+-                </Button>
+-              </BtnPaymentWrapper>
+-            </PaymentBodyWrapper>
+-            <CloseButton onClick={() => self.closePayment()} />
+-          </PaymentWrapper>
+-        </Card>
+-      );
+-    });
+-
+-    const { donate, message } = this.props;
+-
++    const routes = (
++      <Switch>
++        <Route path="/" exact component={Home} />
++      </Switch>
++    );
+     return (
+-      <div>
+-        <Title>Tamboon React</Title>
+-        <Subtitle>All donations: { donate }</Subtitle>
+-        <Message show={message ? 'inline-block' : 'none'}>
+-          {message}
+-        </Message>
+-        <Container>
+-          { cards }
+-        </Container>
+-      </div>
++      <Layout>
++        {routes}
++      </Layout>
+     );
+   }
+-}
+-
+-const mapStateToProps = state => {
+-  return {
+-    donate: state.donations,
+-    message: state.message,
+-  };
+-};
+-
+-const mapDispatchToProps = dispatch => {
+-  return {
+-    updateDonation:(data) => dispatch(actions.updateTotalDonate(data)),
+-    handlePayment: ( id, selectedAmount, currency) => dispatch(actions.handlePay( id, selectedAmount, currency)),
+-  };
+ };
+ 
+-export default connect(mapStateToProps,mapDispatchToProps)(App);
++export default withRouter(App);
+diff --git a/src/AppOld.js b/src/AppOld.js
+deleted file mode 100644
+index e1341ac..0000000
+--- a/src/AppOld.js
++++ /dev/null
+@@ -1,114 +0,0 @@
+-import React, { Component } from 'react';
+-import { connect } from 'react-redux';
+-import styled from 'styled-components';
+-import fetch from 'isomorphic-fetch';
+-
+-import { summaryDonations } from './helpers';
+-
+-
+-const Card = styled.div`
+-  margin: 10px;
+-  border: 1px solid #ccc;
+-`;
+-
+-export default connect((state) => state)(
+-  class AppOld extends Component {
+-    constructor(props) {
+-      super();
+-
+-      this.state = {
+-        charities: [],
+-        selectedAmount: 10,
+-      };
+-    }
+-
+-    componentDidMount() {
+-      debugger;
+-      const self = this;
+-      fetch('http://localhost:3001/charities')
+-        .then(function(resp) { return resp.json(); })
+-        .then(function(data) {
+-          self.setState({ charities: data }) });
+-
+-      fetch('http://localhost:3001/payments')
+-        .then(function(resp) { return resp.json() })
+-        .then(function(data) {
+-          self.props.dispatch({
+-            type: 'UPDATE_TOTAL_DONATE',
+-            amount: summaryDonations(data.map((item) => (item.amount))),
+-          });
+-        })
+-    }
+-
+-    render() {
+-      const self = this;
+-      const cards = this.state.charities.map(function(item, i) {
+-        const payments = [10, 20, 50, 100, 500].map((amount, j) => (
+-          <label key={j}>
+-            <input
+-              type="radio"
+-              name="payment"
+-              onClick={function() {
+-                self.setState({ selectedAmount: amount })
+-              }} /> {amount}
+-          </label>
+-        ));
+-
+-        return (
+-          <Card key={i}>
+-            <p>{item.name}</p>
+-            {payments}
+-            <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
+-          </Card>
+-        );
+-      });
+-
+-      const style = {
+-        color: 'red',
+-        margin: '1em 0',
+-        fontWeight: 'bold',
+-        fontSize: '16px',
+-        textAlign: 'center',
+-      };
+-      const donate = this.props.donate;
+-      const message = this.props.message;
+-
+-      return (
+-        <div>
+-          <h1>Tamboon React</h1>
+-          <p>All donations: {donate}</p>
+-          <p style={style}>{message}</p>
+-          {cards}
+-        </div>
+-      );
+-    }
+-  }
+-);
+-
+-function handlePay(id, amount, currency) {
+-  const self = this;
+-  return function() {
+-    fetch('http://localhost:3001/payments', {
+-      method: 'POST',
+-      body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
+-    })
+-      .then(function(resp) { return resp.json(); })
+-      .then(function() {
+-        self.props.dispatch({
+-          type: 'UPDATE_TOTAL_DONATE',
+-          amount,
+-        });
+-        self.props.dispatch({
+-          type: 'UPDATE_MESSAGE',
+-          message: `Thanks for donate ${amount}!`,
+-        });
+-
+-        setTimeout(function() {
+-          self.props.dispatch({
+-            type: 'UPDATE_MESSAGE',
+-            message: '',
+-          });
+-        }, 2000);
+-      });
+-  }
+-}
+diff --git a/src/components/DonationCard/index.js b/src/components/DonationCard/index.js
+new file mode 100644
+index 0000000..68246d5
+--- /dev/null
++++ b/src/components/DonationCard/index.js
+@@ -0,0 +1,63 @@
++import React from 'react';
++
++import {
++  Card,
++  Button,
++  PaymentWrapper,
++  CardFooter,
++  FooterTitle,
++  CardBodyImage,
++  PaymentBodyWrapper,
++  BtnPaymentWrapper,
++  CloseButton,
++  SelectAmount,
++  FooterButtonWrapper,
++  commonStyles,
++}
++  from './style';
++
++const DonationCard = ( props ) => {
++
++  const {
++    image,
++    name,
++    id,
++    payments,
++    handlePayment,
++    closePayment,
++    showPayment,
++    keyOf,
++    selectedAmount,
++    transitPayment,
++    currency,
++  } = props;
++
++  return (
++
++    <Card key={keyOf}>
++      <CardBodyImage src={ image } />
++      <CardFooter>
++        <FooterTitle>{name}</FooterTitle>
++        <FooterButtonWrapper>
++          <Button onClick={() => transitPayment(id)}> Donate </Button>
++        </FooterButtonWrapper>
++      </CardFooter>
++      <PaymentWrapper style={showPayment === id ? commonStyles.show : commonStyles.hide}>
++        <PaymentBodyWrapper>
++          <SelectAmount> Select the amount to donate(USD) </SelectAmount>
++          {payments}
++          <BtnPaymentWrapper>
++            <Button
++              onClick={() => handlePayment(id, selectedAmount, currency)}
++              type="payment"
++            >Pay
++            </Button>
++          </BtnPaymentWrapper>
++        </PaymentBodyWrapper>
++        <CloseButton onClick={() => closePayment()} />
++      </PaymentWrapper>
++    </Card>
++  );
++
++};
++export default DonationCard;
+diff --git a/src/components/DonationCard/style.js b/src/components/DonationCard/style.js
+new file mode 100644
+index 0000000..bc09632
+--- /dev/null
++++ b/src/components/DonationCard/style.js
+@@ -0,0 +1,170 @@
++import styled, { injectGlobal, keyframes } from 'styled-components';
++
++export const Card = styled.div`
++  position:relative;
++  display: inline-block;
++  margin:10px;
++  min-width: calc(50% - 20px);
++  border-radius: 4px;
++  box-shadow: #ccc 1px 2px 8px;
++  @media(max-width:1000px){
++    display:block;
++    width: calc (100% - 10px);
++  }
++`;
++
++export const Button = styled.button`
++    padding: 0.5em 1em;
++    border: solid 1px #000bff;
++    outline: 0;
++    background: #fff;
++    color: #000bff;
++    border-radius: 3px;
++    cursor: pointer;
++    @media(max-width: 1000px){
++      display: ${(props)=>props.type && props.type === 'payment' ? 'inline-block':'block'};
++      width: ${(props)=>props.type && props.type === 'payment' ? 'auto':'100%'};
++      padding: ${(props)=>props.type && props.type === 'payment' ? 'none':'19px'};
++      font-style: normal;
++      font-size: 23px;
++    }
++`;
++
++
++export const Slide = keyframes`
++  100% { left: 0; }
++`;
++
++export const FadeIn = keyframes`
++  from {
++      opacity:0;
++  }
++  to {
++      opacity:1;
++  }
++`;
++
++export const PaymentWrapper = styled.div`
++  display: none;
++  position: absolute;
++  top:0;
++  left:100%;
++  width: 100%;
++  height: 100%;
++  opacity:0.9;
++  background-color:#fff;
++  -webkit-animation: ${Slide} 0.5s forwards;
++  animation: ${Slide} 0.5s forwards;
++`;
++
++export const CardFooter = styled.div`
++  position: relative;
++  padding: 25px 15px 25px 15px;
++  cursor: pointer;
++  @media(max-width: 1000px){
++    padding: 25px 0px 32px 21px;
++  }
++`;
++
++export const FooterTitle = styled.span`
++  padding:0;
++  margin:0;
++  text-align:left;
++  font-size: 16px;
++  color: #7c7c7c;
++  @media(max-width:1000px){
++    font-size: 25px;
++    font-weight: bold;
++  }
++`;
++
++export const CardBodyImage = styled.div`
++  background-image: url(${(props) => props.src ? props.src : ''});
++  background-repeat: no-repeat;
++  background-size: 100% 100%;
++  background-position: center;
++  width: 100%;
++  height: 315px;
++  object-fit: contain;
++  background-color:#000;
++  border-top-left-radius:4px;
++  border-top-right-radius:4px;
++  cursor: pointer;
++  @media(max-width:1000px){
++    display:block;
++    width: 100%;
++  }
++`;
++
++export const PaymentBodyWrapper = styled.div`
++  padding: 15% 10%;
++  text-align: center;
++  cursor: pointer;
++  opacity: 1;
++  line-height: 32px;
++  @media(max-width: 1000px){
++    font-style:normal;
++    font-size: 21px;
++  }
++`;
++
++export const BtnPaymentWrapper = styled.div`
++  margin:20px;
++  text-align: center;
++`;
++
++export const CloseButton = styled.div`
++  position:absolute;
++  top: 20px;
++  right: 20px;
++  background-image: url(images/close.png);
++  background-repeat: no-repeat;
++  background-size: 1em 1em;
++  background-position: center;
++  width: 1em;
++  height: 1em;
++  object-fit: contain;
++  cursor:pointer;
++`;
++
++export const GlobalStyle = injectGlobal`
++  html,body,p,label,input {
++    margin:0;
++    padding:0;
++    font-family: sans-serif;
++    font-size: 18px;
++    font-style: normal;
++    @media(max-width: 1000px){
++      font-size: 36px;
++    }
++  }
++`;
++
++export const SelectAmount =  styled.p`
++  font-style: normal;
++  font-size: 20px;
++  @media(max-width: 1000px){
++    font-size: 36px;
++    margin-bottom: 1em;
++  }
++`;
++
++export const FooterButtonWrapper = styled.div`
++  position: absolute;
++  right: 20px;
++  top: 25px;
++  @media(max-width: 1000px){
++    display: block;
++    position: relative;
++    right: 10px;
++  }
++`;
++
++export const commonStyles = {
++  show:{
++    display: 'block',
++  },
++  hide:{
++    display: 'none',
++  },
++};
+diff --git a/src/components/Layout/Layout.js b/src/components/Layout/Layout.js
+new file mode 100644
+index 0000000..d9687a1
+--- /dev/null
++++ b/src/components/Layout/Layout.js
+@@ -0,0 +1,30 @@
++import React from 'react';
++import {NavLink} from 'react-router-dom';
++import {
++  Navigation,
++  Menu,
++  Title,
++  Container,
++  StyledLink,
++} from './style';
++
++const Layout = (props) => {
++  const rando = btoa(Math.random())
++  return(
++    <div>
++      <Navigation>
++        <Title> Omise Tamboon React </Title>
++        <Menu>
++          <StyledLink to="/" activeClassName={rando}>
++            Home
++          </StyledLink>
++        </Menu>
++      </Navigation>
++      <Container>
++        {props.children}
++      </Container>
++    </div>
++  );
++};
++
++export default Layout;
+diff --git a/src/components/Layout/index.js b/src/components/Layout/index.js
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/src/components/Layout/style.js b/src/components/Layout/style.js
+index e69de29..1d0e121 100644
+--- a/src/components/Layout/style.js
++++ b/src/components/Layout/style.js
+@@ -0,0 +1,60 @@
++import styled from 'styled-components';
++import {NavLink} from 'react-router-dom';
++
++export const Navigation = styled.div`
++  display: flex;
++  position: static;
++  width: 100%;
++  height: 60px;
++  background: #0012ff;
++  color: #fff;
++  font-style: normal;
++  box-shadow: #ccc 2px 3px 4px;
++`;
++
++export const Menu = styled.div`
++  position: absolute;
++  right: 20px;
++  top: 17px;
++  color: #fff;
++  font-weight: bold;
++  text-decoration: none;
++  & a {
++    text-decoration: none;
++    color:#fff;
++    padding: 20px;
++  }
++  & a:hover {
++    background-color: #ccc;
++  }
++  @media(max-width: 1000px){
++    display: none;
++  }
++`;
++
++export const StyledLink = styled(NavLink)`
++  background-color: #ccc;
++  border-bottom: solid 2px #fff;
++`;
++
++export const Title = styled.div`
++  position: absolute;
++  top: 16px;
++  left: 20px;
++  color: #fff;
++  font-weight: bold;
++  font-size: 20px;
++`;
++
++export const Container = styled.div`
++  box-shadow: #ccc 2px 1px 13px;
++  min-height: 600px;
++  margin: 0 1%;
++  border-radius: 4px;
++  padding: 16px;
++  @media(max-width: 1000px){
++    box-shadow: none;
++    margin: 0;
++    padding: 0;
++  }
++`;
+diff --git a/src/components/Loader/index.js b/src/components/Loader/index.js
+deleted file mode 100644
+index d3bbc0e..0000000
+--- a/src/components/Loader/index.js
++++ /dev/null
+@@ -1,101 +0,0 @@
+-import React from 'react';
+-import styled, { keyframes } from 'styled-components';
+-import { Row, Col } from 'styled-bootstrap-grid';
+-
+-const Progress = keyframes`
+-    0% {
+-        background-position: 0% 50%;
+-    }
+-    50% {
+-        background-position: 100% 50%;
+-    }
+-    100% {
+-        background-position: 0% 50%;
+-    }
+-`;
+-
+-const Skeleton = styled.div`
+-    position: relative;
+-    overflow: hidden;
+-    margin-top: ${(props) => props.marginTop}px;
+-    margin-bottom: ${(props) => props.marginBottom}px;
+-    width: ${(props) => props.width}%;
+-    height: ${(props) => props.height}px;
+-    background: #ccc;
+-    border-bottom-left-radius:3px;
+-    border-top-left-radius:3px;    
+-    display: block;
+-    background-image: linear-gradient(270deg, #fcfcfc, #d8d8d8);
+-    background-size: 400% 100%;
+-    animation: ${Progress} 3s ease infinite;
+-`;
+-
+-const Common = {
+-  col: {
+-    paddingLeft: 0,
+-    paddingRight: 0,
+-  },
+-  row: {
+-    marginLeft: 0,
+-    marginRight: 0,
+-    marginBottom: '16px',
+-    background: '#fff',
+-    border: '1px solid #eaeaea',
+-    borderRadius: '0.25rem',
+-  },
+-  colHotelDetail: {},
+-};
+-
+-const SkeletonLoader = (props) => {
+-  const { pages } = props;
+-  return (
+-    <Row style={Common.row}>
+-      <Col style={pages === 'hotel-detail' ? Common.colHotelDetail : Common.col} col={3}>
+-        {
+-          pages !== 'hotel-detail'
+-          && (
+-            <Skeleton width={100} marginTop={-1} height={193} />
+-          )
+-        }
+-        {
+-          pages === 'hotel-detail'
+-          && (
+-            <>
+-              <Skeleton marginTop={8} width={90} height={15} />
+-              <Skeleton marginTop={8} width={70} height={15} />
+-              <Skeleton marginTop={8} width={90} height={15} />
+-              <Skeleton marginTop={8} width={70} height={15} />
+-              <Skeleton marginTop={8} width={90} height={15} />
+-              <Skeleton marginTop={8} width={70} height={15} />
+-              <Skeleton marginTop={8} width={90} height={15} />
+-              <Skeleton marginTop={8} width={50} height={15} />
+-            </>
+-          )
+-        }
+-
+-      </Col>
+-      <Col col={7}>
+-        <Skeleton marginTop={8} width={20} height={15} />
+-        <Skeleton marginTop={8} width={50} height={15} />
+-        <Skeleton marginTop={8} width={40} height={15} />
+-        <Skeleton marginTop={8} width={29} height={15} />
+-        <Skeleton marginTop={8} width={15} height={15} />
+-        <Skeleton marginTop={8} width={40} height={15} />
+-        <Skeleton marginTop={8} width={50} height={15} />
+-        <Skeleton marginTop={8} width={50} height={15} />
+-      </Col>
+-      <Col col={2}>
+-        <Skeleton marginTop={8} width={90} height={15} />
+-        <Skeleton marginTop={8} width={70} height={15} />
+-        <Skeleton marginTop={8} width={90} height={15} />
+-        <Skeleton marginTop={8} width={70} height={15} />
+-        <Skeleton marginTop={8} width={90} height={15} />
+-        <Skeleton marginTop={8} width={70} height={15} />
+-        <Skeleton marginTop={8} width={90} height={15} />
+-        <Skeleton marginTop={8} width={50} height={15} />
+-      </Col>
+-    </Row>
+-  );
+-}
+-
+-export default SkeletonLoader;
+diff --git a/src/components/Loader/style.js b/src/components/Loader/style.js
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/src/containers/Home/index.js b/src/containers/Home/index.js
+index e69de29..2d4f9b8 100644
+--- a/src/containers/Home/index.js
++++ b/src/containers/Home/index.js
+@@ -0,0 +1,112 @@
++import React, { Component } from 'react';
++import { connect } from 'react-redux';
++import fetch from 'isomorphic-fetch';
++import * as actions from '../../store/actions';
++import DonationCard from '../../components/DonationCard';
++
++import {
++  Message,
++  Container,
++  InputLabel,
++  Radio,
++  Title,
++  Subtitle,
++  GlobalStyle,
++}
++  from './style';
++
++class Home extends Component {
++  state = {
++    charities: [],
++    selectedAmount: 10,
++    showPayment:'',
++  };
++
++  async componentDidMount() {
++    const self = this;
++    const { updateDonation } = self.props;
++
++    await fetch('http://localhost:3001/charities')
++      .then(function(resp) { return resp.json(); })
++      .then(function(data) {
++        self.setState({ charities: data }) });
++
++    const data = await fetch('http://localhost:3001/payments')
++      .then(function(resp) { return resp.json() })
++      .then(function(data) {
++        return data;
++      });
++    updateDonation(data);
++  }
++
++  transitPayment = (id) => {
++    this.setState({showPayment: id});
++  };
++
++  closePayment = () => {
++    this.setState({showPayment:''});
++  };
++
++  render() {
++    const self = this;
++    const cards = this.state.charities.map(function(item, i) {
++      const payments = [10, 20, 50, 100, 500].map((amount, j) => (
++        <InputLabel key={j}>
++          <Radio
++            type="radio"
++            name="payment"
++            onClick={function() {
++              self.setState({ selectedAmount: amount })
++            }} /> {amount}
++        </InputLabel>
++      ));
++
++      return (
++        <DonationCard key={i}
++          keyOf={i}
++          image={'/images/'+ item.image}
++          id={item.id}
++          name={item.name}
++          transitPayment={self.transitPayment}
++          showPayment={self.state.showPayment}
++          payments={payments}
++          handlePayment={self.props.handlePayment}
++          closePayment={self.closePayment}
++          selectedAmount={self.state.selectedAmount}
++          currency={item.currency}
++        />
++      );
++    });
++
++    const { donate, message } = this.props;
++
++    return (
++      <div>
++        <Title>Tamboon React</Title>
++        <Subtitle>All donations: { donate }</Subtitle>
++        <Message show={message ? 'inline-block' : 'none'}>
++          {message}
++        </Message>
++        <Container>
++          { cards }
++        </Container>
++      </div>
++    );
++  }
++}
++
++const mapStateToProps = state => {
++  return {
++    donate: state.donations,
++    message: state.message,
++  };
++};
++
++const mapDispatchToProps = dispatch => {
++  return {
++    updateDonation:(data) => dispatch(actions.updateTotalDonate(data)),
++    handlePayment: ( id, selectedAmount, currency) => dispatch(actions.handlePay( id, selectedAmount, currency)),
++  };
++};
++
++export default connect(mapStateToProps,mapDispatchToProps)(Home);
+diff --git a/src/containers/Home/style.js b/src/containers/Home/style.js
+index e69de29..04ab483 100644
+--- a/src/containers/Home/style.js
++++ b/src/containers/Home/style.js
+@@ -0,0 +1,94 @@
++import styled, { injectGlobal, keyframes } from 'styled-components';
++
++export const FadeIn = keyframes`
++  from {
++      opacity:0;
++  }
++  to {
++      opacity:1;
++  }
++`;
++
++export const Message = styled.div`
++  display: ${(props)=>props.show && props.show};
++  color: black;
++  background-color: #ffebc8;
++  border-radius: 4px;
++  padding: 20px;
++  width: 29%;
++  margin-left: 34%;
++  background-position: center;
++  font-size: 18px;
++  text-align: center;
++  animation: ${FadeIn} 2s;
++  -moz-animation: ${FadeIn} 2s; /* Firefox */
++  -webkit-animation: ${FadeIn} 2s; /* Safari and Chrome */
++  -o-animation: ${FadeIn} 2s; /* Opera */
++`;
++
++export const Container = styled.div`
++  position:relative;
++  width: 90%;
++  margin-left: 5%;
++  padding:0;
++  @media(max-width: 1000px){
++    width: 100%;
++    margin: 0;
++  }
++`;
++
++export const GlobalStyle = injectGlobal`
++  html,body,p,label,input {
++    margin:0;
++    padding:0;
++    font-family: sans-serif;
++    font-size: 18px;
++    font-style: normal;
++    @media(max-width: 1000px){
++      font-size: 36px;
++    }
++  }
++`;
++
++export const InputLabel = styled.label`
++  font-style: normal;
++  font-size: 20px;
++  @media(max-width: 1000px){
++    font-size: 1.5em;
++  }
++`;
++
++export const Radio =  styled.input`
++  text-align: left;
++  font-size: 1em;
++  width: 1em;
++  height: 0.8em;
++  margin-left: 1em;
++  cursor: pointer;
++  @media(max-width: 1000px){
++    margin-left: 1.5em;
++  }
++`;
++
++export const Title = styled.h1`
++  text-align: center;
++  color: #7c7c7c;
++  font-style: normal;
++  font-size: 26px;
++  @media(max-width: 1000px){
++    letter-spacing: 3.75px;
++    font-size: 36px;
++    line-height: 32px;
++  }
++`;
++
++export const Subtitle = styled.p`
++  text-align: center;
++  color: #7c7c7c;
++  font-weight:bold;
++  font-size:18px;
++  font-style: normal;
++  @media(max-width: 1000px){
++    font-size: 25px;
++  }
++`;
+diff --git a/src/index.js b/src/index.js
+index d7d9d20..7b58fe6 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -7,25 +7,6 @@ import donationReducer from './store/reducers/donationReducer';
+ import App from './App';
+ import thunk from 'redux-thunk';
+ 
+-// const store = createStore(function(state, action) {
+-//   const _state = state == null ? {
+-//     donate: 0,
+-//     message: '',
+-//   } : state;
+-//
+-//   switch (action.type) {
+-//     case 'UPDATE_TOTAL_DONATE':
+-//       return Object.assign({}, _state, {
+-//         donate: _state.donate + action.amount,
+-//       });
+-//     case 'UPDATE_MESSAGE':
+-//       return Object.assign({}, _state, {
+-//         message: action.message,
+-//       });
+-//
+-//     default: return _state;
+-//   }
+-// });
+ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+ const store = createStore(
+   donationReducer,
+@@ -40,3 +21,4 @@ render(
+   </Provider>,
+   document.getElementById('root')
+ );
++
+diff --git a/src/store/actions/actionTypes.js b/src/store/actions/actionTypes.js
+index 49f6c39..1bae429 100644
+--- a/src/store/actions/actionTypes.js
++++ b/src/store/actions/actionTypes.js
+@@ -1,6 +1,4 @@
+ export const UPDATE_TOTAL_DONATE = 'UPDATE_TOTAL_DONATE';
+ export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+-
+-export const FETCH_DONATION_START = 'FETCH_DONATION_START';
+ export const FETCH_DONATION_SUCCESS = 'FETCH_DONATION_SUCCESS';
+ export const FETCH_DONATION_FAIL = 'FETCH_DONATION_FAIL';
+diff --git a/src/store/actions/actions.js b/src/store/actions/actions.js
+index 2c25261..639e60f 100644
+--- a/src/store/actions/actions.js
++++ b/src/store/actions/actions.js
+@@ -2,12 +2,6 @@ import * as actionTypes from './actionTypes';
+ import fetch from 'isomorphic-fetch';
+ import {summaryDonations} from '../../helpers';
+ 
+-export const fetchDonationsStart = () => {
+-  return {
+-    type: actionTypes.FETCH_DONATION_START,
+-  };
+-};
+-
+ export const updateTotalDonate = (data) => {
+   return {
+     type: actionTypes.UPDATE_TOTAL_DONATE,
+@@ -36,8 +30,8 @@ export const updateMessage = (message) => {
+ };
+ 
+ export const handlePay = (id, amount, currency) => {
++  debugger;
+   return dispatch => {
+-    dispatch(fetchDonationsStart());
+     const url = 'http://localhost:3001/payments'
+     const headers = {
+       'Content-Type': 'application/json',
+@@ -49,7 +43,7 @@ export const handlePay = (id, amount, currency) => {
+     }).then(resp => { return resp.json(); })
+       .then( res => {
+         dispatch(fetchDonationsSuccess(amount));
+-        dispatch(updateMessage(`Thanks for donate ${amount}!`));
++        dispatch(updateMessage(`Thank you for the donation of $ ${amount}`));
+         setTimeout(function() {
+           dispatch(updateMessage());
+         }, 2000);
+diff --git a/webpack.config.js b/webpack.config.js
+index cbff282..21116d5 100644
+--- a/webpack.config.js
++++ b/webpack.config.js
+@@ -2,7 +2,7 @@ const path = require('path');
+ require('babel-polyfill');
+ 
+ const config = {
+-  entry: ['babel-polyfill','./src/index.js'],
++  entry: ['babel-polyfill','./src/Layout.js'],
+   output: {
+     path: path.resolve(__dirname, 'build'),
+     filename: '[name].js',
+-- 
+2.19.0.windows.1
+
